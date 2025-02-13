@@ -2,12 +2,13 @@ import { Post, User, Comment, Like } from "@/types";
 import AuthContext from "./AuthContext";
 import { redirect } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useEffect } from "react";
 
 export default function AuthProvider({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
 	const [user, setUser] = useLocalStorage<User | null>("user", null);
-	const [users, setUsers] = useLocalStorage<User[] | []>("users", []);
+	const [users, setUsers] = useLocalStorage<User[]>("users", []);
 
 	function handleRegister(userData: User) {
 		const existingUser = users.find(
@@ -54,6 +55,24 @@ export default function AuthProvider({
 		setUser(null);
 	}
 
+	function updateBio(updatedBio: string) {
+		setUser(prev => prev ? ({...prev, bio: updatedBio}) : prev);
+	}
+
+	function updateAvatarUrl(updatedAvatarUrl: string) {
+		setUser(prev => prev ? ({...prev, avatarUrl: updatedAvatarUrl}) : prev);
+	}
+
+	useEffect(() => {
+		const updatedUsers = users.map(u => {
+			if (user?.id === u.id) {
+				return user;
+			}
+			return u;
+		});
+		setUsers(updatedUsers as User[]);
+	}, [user]);
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -62,6 +81,8 @@ export default function AuthProvider({
 				handleRegister,
 				handleLogin,
 				handleLogout,
+				updateBio,
+				updateAvatarUrl,
 			}}
 		>
 			{children}
