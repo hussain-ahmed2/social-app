@@ -1,7 +1,7 @@
 "use client";
 
 import AuthContext from "@/contexts/AuthContext";
-import { LogOut } from "lucide-react";
+import { LogOut, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { useContext } from "react";
 
@@ -12,10 +12,25 @@ export default function AuthBar() {
 			{user ? (
 				<>
 					<div className="flex items-center gap-3">
-						<Link className="font-medium hover:underline text-sky-500" href={"/user"}>{user.name}</Link>
+						<Link
+							className="font-medium hover:underline text-sky-500"
+							href={"/user"}
+						>
+							{user?.avatarUrl ? (
+								<img
+									src={user.avatarUrl}
+									alt={user.name}
+									className="w-8 h-8 rounded-full object-cover group-hover:opacity-70"
+								/>
+							) : (
+								<div className="group-hover:opacity-70">
+									<UserCircle size={32} />
+								</div>
+							)}
+						</Link>
 						<button onClick={handleLogout}>
-                            <LogOut />
-                        </button>
+							<LogOut />
+						</button>
 					</div>
 				</>
 			) : (
