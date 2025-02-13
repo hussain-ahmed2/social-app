@@ -45,13 +45,15 @@ export interface AuthContextType {
     handleRegister: (user: User) => boolean;
     handleLogin: (user: User) => { email: boolean; password: boolean };
     handleLogout: () => void;
+    updateBio: (updatedBio: string) => void;
+    updateAvatarUrl: (updatedAvatarUrl: string) => void;
 }
 
 export interface PostContextType {
-	posts: Post[] | [];
+	posts: Post[];
 	setPosts: Post[] | Dispatch<SetStateAction<Post[]>>;
-	comments: Comment[] | [];
+	comments: Comment[];
 	setComments: Comment[] | Dispatch<SetStateAction<Comment[]>>;
-	likes: Like[] | [];
+	likes: Like[];
 	setLikes: Like[] | Dispatch<SetStateAction<Like[]>>;
 }
