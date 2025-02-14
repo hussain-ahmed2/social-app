@@ -24,7 +24,8 @@ export default function RegisterPage() {
 			setErrors(prev => ({...prev, password: true}));
 			return;
 		}
-		if (!handleRegister(userData)) {
+		const {confirmPassword, ...userDetails} = userData;
+		if (!handleRegister(userDetails)) {
 			setErrors(prev => ({...prev, email: true}));
 		}
 	}
