@@ -1,15 +1,27 @@
 "use client";
 
+import PostTextarea from "@/components/home/PostTextarea";
+import PostCard from "@/components/post/PostCard";
 import AuthContext from "@/contexts/AuthContext";
-import { useContext } from "react";
+import PostContext from "@/contexts/PostContext";
+import { redirect } from "next/navigation";
+import { useContext, useEffect } from "react";
 
 export default function Home() {
 	const { user } = useContext(AuthContext);
+	const { posts } = useContext(PostContext);
+	useEffect(() => {
+		if (!user) redirect("/login");
+	}, [user]);
 	return (
-		<div>
-			<h1 className="text-center font-bold text-2xl">Latest posts</h1>
-			<div className="flex flex-col gap-5 p-5 max-w-3xl mx-auto">
-				
+		<div className="px-5 sm:px-8 md:px-10 max-w-7xl container mx-auto">
+			<div>
+				<PostTextarea />
+			</div>
+			<div>
+				{
+					posts && posts.map(post => <PostCard key={post.id} {...post} />)
+				}
 			</div>
 		</div>
 	);
