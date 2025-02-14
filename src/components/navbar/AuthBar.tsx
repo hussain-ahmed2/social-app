@@ -20,7 +20,7 @@ export default function AuthBar() {
 								<img
 									src={user.avatarUrl}
 									alt={user.name}
-									className="w-8 h-8 rounded-full object-cover group-hover:opacity-70"
+									className="w-8 h-8 rounded-full object-cover group-hover:opacity-70 border"
 								/>
 							) : (
 								<div className="group-hover:opacity-70">
