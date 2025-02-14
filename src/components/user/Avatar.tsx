@@ -39,7 +39,7 @@ export default function Avatar() {
 						onError={(e) => setImageError(true)}
 						src={user.avatarUrl}
 						alt={user.name}
-						className="w-12 h-12 rounded-full object-cover group-hover:opacity-70"
+						className="w-12 h-12 rounded-full object-cover group-hover:opacity-70 border"
 					/>
 				) : (
 					<div className="group-hover:opacity-70">
@@ -48,7 +48,7 @@ export default function Avatar() {
 				)}
 				<button
 					onClick={() => setIsEditing(true)}
-					className="invisible group-hover:visible absolute bottom-0 right-0 text-blue-500 w-full h-full flex items-end justify-center rounded-full scale-75"
+					className="invisible active:scale-95 group-hover:visible absolute bottom-0 right-0 text-blue-500 w-full h-full flex items-end justify-center rounded-full"
 				>
 					<Edit3 size={24} />
 				</button>
@@ -72,13 +72,13 @@ export default function Avatar() {
 				<div className="flex items-center justify-end gap-4 mt-2 text-sm">
 					<button
 						onClick={handleCancel}
-						className="border px-6 py-2 rounded-md bg-neutral-500 hover:bg-neutral-700 text-white transition-colors"
+						className="active:scale-95 border px-6 py-2 rounded-md bg-neutral-500 hover:bg-neutral-700 text-white transition-colors"
 					>
 						Cancel
 					</button>
 					<button
 						onClick={handleSave}
-						className="border px-6 py-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white transition-colors"
+						className="active:scale-95 border px-6 py-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white transition-colors"
 					>
 						Save
 					</button>
