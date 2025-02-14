@@ -10,7 +10,7 @@ export default function AuthProvider({
 	const [user, setUser] = useLocalStorage<User | null>("user", null);
 	const [users, setUsers] = useLocalStorage<User[]>("users", []);
 
-	function handleRegister(userData: User) {
+	function handleRegister(userData: Omit<User, "id">) {
 		const existingUser = users.find(
 			(user) => user.email === userData.email
 		);
@@ -63,6 +63,10 @@ export default function AuthProvider({
 		setUser(prev => prev ? ({...prev, avatarUrl: updatedAvatarUrl}) : prev);
 	}
 
+	function getUserById(userId: number) {
+		return users.find(u => u.id === userId);
+	}
+
 	useEffect(() => {
 		const updatedUsers = users.map(u => {
 			if (user?.id === u.id) {
@@ -83,6 +87,7 @@ export default function AuthProvider({
 				handleLogout,
 				updateBio,
 				updateAvatarUrl,
+				getUserById,
 			}}
 		>
 			{children}
