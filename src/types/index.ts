@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface User {
-    id?: number;
+    id: number;
     name: string;
     email: string;
     password: string;
@@ -12,11 +12,11 @@ export interface User {
 }
 
 export interface Post {
-    id: string;
+    id: number;
     title?: string;
     content: string;
     imageUrl?: string;
-    authorId: string;
+    authorId: number;
     tags?: string[];
     createdAt: string;
     updatedAt: string;
@@ -42,11 +42,12 @@ export interface Like {
 export interface AuthContextType {
 	user: User | null;
 	setUser: User | Dispatch<SetStateAction<User | null>> | null;
-    handleRegister: (user: User) => boolean;
-    handleLogin: (user: User) => { email: boolean; password: boolean };
-    handleLogout: () => void;
-    updateBio: (updatedBio: string) => void;
-    updateAvatarUrl: (updatedAvatarUrl: string) => void;
+	handleRegister: (user: Omit<User, "id">) => boolean;
+	handleLogin: (user: User) => { email: boolean; password: boolean };
+	handleLogout: () => void;
+	updateBio: (updatedBio: string) => void;
+	updateAvatarUrl: (updatedAvatarUrl: string) => void;
+    getUserById: (userId: number) => User | undefined;
 }
 
 export interface PostContextType {
@@ -56,4 +57,5 @@ export interface PostContextType {
 	setComments: Comment[] | Dispatch<SetStateAction<Comment[]>>;
 	likes: Like[];
 	setLikes: Like[] | Dispatch<SetStateAction<Like[]>>;
+	createPost: (authorId: number, content: string, title?: string) => void;
 }
