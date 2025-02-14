@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${karla.className} antialiased bg-neutral-100`}>
+			<body className={`${karla.className} antialiased bg-neutral-200`}>
 				<RootProvider>
 					<div>
 						<Navbar />
