@@ -1,5 +1,6 @@
+import { PostContextType } from "@/types";
 import { createContext } from "react";
 
-const PostContext = createContext({} as any);
+const PostContext = createContext<PostContextType>({} as PostContextType);
 
 export default PostContext;
