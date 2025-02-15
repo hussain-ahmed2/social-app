@@ -18,7 +18,7 @@ export default function Home() {
 			<div>
 				<PostTextarea />
 			</div>
-			<div>
+			<div className="flex flex-col gap-5">
 				{
 					posts && posts.map(post => <PostCard key={post.id} {...post} />)
 				}
