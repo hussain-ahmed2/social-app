@@ -33,11 +33,7 @@ export default function PostTextarea() {
 
     function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
         setPost(event.target.value);
-        if (post.trim()) {
-            setError(false);
-        } else {
-            setError(true);
-        }
+		setError(false);
     }
 
 	useEffect(() => {
