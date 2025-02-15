@@ -1,12 +1,13 @@
 import { Post } from "@/types";
 import PostAuthor from "./PostAuthor";
-import { ThumbsUp } from "lucide-react";
+import LikeBtn from "./LikeBtn";
 
 export default function PostCard({
 	content,
 	title,
 	authorId,
 	updatedAt,
+	id
 }: Post) {
 	return (
 		<article className="border p-5 rounded-lg shadow-sm bg-neutral-100 container mx-auto">
@@ -25,9 +26,7 @@ export default function PostCard({
 				</div>
 			</div>
 			<div className="mt-2">
-				<button className="rounded-full border p-2 bg-white">
-					<ThumbsUp size={20} />
-				</button>
+				<LikeBtn postId={id} />
 			</div>
 		</article>
 	);
