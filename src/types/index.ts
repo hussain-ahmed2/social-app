@@ -23,18 +23,18 @@ export interface Post {
 }
 
 export interface Comment {
-    id: string;
+    id: number;
     content: string;
-    postId: string;
-    authorId: string;
+    postId: number;
+    authorId: number;
     createdAt: string;
     updatedAt: string;
 }
 
 export interface Like {
-    id: string;
-    postId: string;
-    authorId: string;
+    id: number;
+    postId: number;
+    authorId: number;
     createdAt: string;
     updatedAt: string;
 }
@@ -58,4 +58,7 @@ export interface PostContextType {
 	likes: Like[];
 	setLikes: Like[] | Dispatch<SetStateAction<Like[]>>;
 	createPost: (authorId: number, content: string, title?: string) => void;
+	toggleLike: (postId: number, authorId: number) => void;
+	getTotalLikeByPostId: (postId: number) => number;
+	isPostLikedByAuthor: (postId: number, authorId: number) => Like | undefined;
 }
