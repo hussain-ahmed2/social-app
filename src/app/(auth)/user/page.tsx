@@ -14,7 +14,7 @@ export default function UserPage() {
 	}, [user]);
 	return (
 		<div>
-			<div className="px-5 sm:px-8 md:px-10 max-w-7xl mx-auto">
+			<div className="px-5 sm:px-8 md:px-10 max-w-3xl mx-auto">
 				<h1 className="text-center font-bold text-2xl my-5">Profile</h1>
 				<div>
 					<div>
