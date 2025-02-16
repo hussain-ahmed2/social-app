@@ -1,6 +1,7 @@
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Comment, Like, Post } from "@/types";
 import PostContext from "./PostContext";
+import { PostData } from "@/components/home/PostTextarea";
 
 export default function PostProvider({
 	children,
@@ -12,17 +13,18 @@ export default function PostProvider({
 	);
 	const [likes, setLikes] = useLocalStorage<Like[] | []>("likes", []);
 
-	function createPost(authorId: number, content: string, title: string = "") {
+	function createPost(authorId: number, postData: PostData) {
 		const id = posts.findLast((post) => post.id)?.id || 0;
 		const newPost: Post = {
 			id: id + 1,
 			authorId: authorId,
-			title: title,
-			content: content,
+			title: postData.title,
+			content: postData.content,
+			imageUrl: postData.imageUrl,
 			createdAt: new Date().toUTCString(),
 			updatedAt: new Date().toUTCString(),
 		};
-		setPosts((prev) => [newPost, ...prev]);
+		setPosts((prev) => [...prev, newPost]);
 	}
 
 	function isPostLikedByAuthor(postId: number, authorId: number): Like | undefined {
@@ -49,6 +51,12 @@ export default function PostProvider({
 		})
 	}
 
+	function deletePost(postId: number) {
+		setPosts(prev => prev.filter(post => post.id !== postId));
+		setComments(prev => prev.filter(comment => comment.postId !== postId));
+		setLikes(prev => prev.filter(like => like.postId !== postId));
+	}
+
 	function getTotalLikeByPostId(postId: number): number {
 		return likes.filter((like) => like.postId === postId).length;
 	}
@@ -66,6 +74,7 @@ export default function PostProvider({
 				toggleLike,
 				getTotalLikeByPostId,
 				isPostLikedByAuthor,
+				deletePost
 			}}
 		>
 			{children}
