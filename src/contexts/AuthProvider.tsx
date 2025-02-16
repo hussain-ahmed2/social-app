@@ -81,7 +81,6 @@ export default function AuthProvider({
 		<AuthContext.Provider
 			value={{
 				user,
-				setUser,
 				handleRegister,
 				handleLogin,
 				handleLogout,
