@@ -42,7 +42,6 @@ export interface Like {
 
 export interface AuthContextType {
 	user: User | null;
-	setUser: User | Dispatch<SetStateAction<User | null>> | null;
 	handleRegister: (user: Omit<User, "id">) => boolean;
 	handleLogin: (user: User) => { email: boolean; password: boolean };
 	handleLogout: () => void;
@@ -52,15 +51,11 @@ export interface AuthContextType {
 }
 
 export interface PostContextType {
-	posts: Post[];
-	setPosts: Post[] | Dispatch<SetStateAction<Post[]>>;
-	comments: Comment[];
-	setComments: Comment[] | Dispatch<SetStateAction<Comment[]>>;
-	likes: Like[];
-	setLikes: Like[] | Dispatch<SetStateAction<Like[]>>;
+	getPosts: (limit: number) => Post[];
 	createPost: (authorId: number, PostData: PostData) => void;
 	toggleLike: (postId: number, authorId: number) => void;
 	getTotalLikeByPostId: (postId: number) => number;
 	isPostLikedByAuthor: (postId: number, authorId: number) => Like | undefined;
     deletePost: (postId: number) => void;
+    getPostById: (postId: number) => Post | undefined;
 }
