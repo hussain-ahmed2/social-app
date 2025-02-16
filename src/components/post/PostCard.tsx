@@ -1,6 +1,7 @@
 import { Post } from "@/types";
 import PostAuthor from "./PostAuthor";
 import LikeBtn from "./LikeBtn";
+import Link from "next/link";
 
 export default function PostCard({
 	content,
@@ -11,9 +12,9 @@ export default function PostCard({
 	imageUrl
 }: Post) {
 	return (
-		<article className="border p-5 rounded-lg shadow-sm bg-neutral-100 container mx-auto">
+		<article className="border p-5 rounded-lg shadow-sm bg-neutral-100">
 			<div className="mb-4">
-				<PostAuthor authorId={authorId} />
+				<PostAuthor authorId={authorId} postId={id} />
 			</div>
 			<div className="">
 				<div className="bg-neutral-50 rounded-md py-2 px-4">
@@ -29,8 +30,9 @@ export default function PostCard({
 					</p>
 				</div>
 			</div>
-			<div className="mt-2">
+			<div className="mt-2 flex items-center justify-between">
 				<LikeBtn postId={id} />
+				<Link className="text-sky-500 font-light text-sm hover:underline" href={`/posts/${id}`}>Read more</Link>
 			</div>
 		</article>
 	);
