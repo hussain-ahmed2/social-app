@@ -61,20 +61,24 @@ export default function PostProvider({
 		return likes.filter((like) => like.postId === postId).length;
 	}
 
+	function getPostById(postId: number): Post | undefined {
+		return posts.find((post) => post.id === postId);
+	}
+
+	function getPosts(limit: number): Post[] {
+		return posts.slice(0, limit).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+	}
+
 	return (
 		<PostContext.Provider
 			value={{
-				posts,
-				setPosts,
-				comments,
-				setComments,
-				likes,
-				setLikes,
+				getPosts,
 				createPost,
 				toggleLike,
 				getTotalLikeByPostId,
 				isPostLikedByAuthor,
-				deletePost
+				deletePost,
+				getPostById
 			}}
 		>
 			{children}
