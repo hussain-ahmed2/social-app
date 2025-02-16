@@ -9,16 +9,17 @@ import { useContext, useEffect } from "react";
 
 export default function Home() {
 	const { user } = useContext(AuthContext);
-	const { posts } = useContext(PostContext);
+	const { getPosts } = useContext(PostContext);
+	const posts = getPosts(10);
 	useEffect(() => {
 		if (!user) redirect("/login");
 	}, [user]);
 	return (
-		<div className="px-5 sm:px-8 md:px-10 max-w-7xl container mx-auto">
+		<div className="px-5 sm:px-8 md:px-10 max-w-3xl container mx-auto">
 			<div>
 				<PostTextarea />
 			</div>
-			<div className="flex flex-col gap-5">
+			<div className="flex flex-col gap-5 mb-5">
 				{
 					posts && posts.map(post => <PostCard key={post.id} {...post} />)
 				}
