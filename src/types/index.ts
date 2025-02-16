@@ -1,3 +1,4 @@
+import { PostData } from '@/components/home/PostTextarea';
 import { Dispatch, SetStateAction } from "react";
 
 export interface User {
@@ -57,8 +58,9 @@ export interface PostContextType {
 	setComments: Comment[] | Dispatch<SetStateAction<Comment[]>>;
 	likes: Like[];
 	setLikes: Like[] | Dispatch<SetStateAction<Like[]>>;
-	createPost: (authorId: number, content: string, title?: string) => void;
+	createPost: (authorId: number, PostData: PostData) => void;
 	toggleLike: (postId: number, authorId: number) => void;
 	getTotalLikeByPostId: (postId: number) => number;
 	isPostLikedByAuthor: (postId: number, authorId: number) => Like | undefined;
+    deletePost: (postId: number) => void;
 }
