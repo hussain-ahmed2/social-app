@@ -126,7 +126,7 @@ export default function PostTextarea() {
 					isModalOpen ? "block" : "hidden"
 				}`}
 			>
-				<div className="w-full max-w-7xl p-5 sm:p-8 md:p-10">
+				<div className="w-full max-w-3xl p-5 sm:p-8 md:p-10">
 					<div
 						onClick={(event) => event.stopPropagation()}
 						className={` bg-white px-5 py-3 shadow rounded-lg flex flex-col container mx-auto z-20`}
@@ -222,16 +222,24 @@ export default function PostTextarea() {
 						<div className="flex items-center gap-4 mt-3 mb-1 text-sm text-neutral-800">
 							<button
 								onClick={() => toggleEnabled("imageUrl")}
-								className="flex items-center gap-2 bg-neutral-100 p-2 rounded-md hover:bg-neutral-200 transition-colors active:scale-95"
+								className={`flex items-center gap-2 bg-neutral-100 p-2 rounded-md transition-colors active:scale-95 ${
+									enabledInputBox.imageUrl
+										? "bg-sky-300"
+										: "hover:bg-neutral-200"
+								}`}
 							>
 								<Image /> <span>Add image url</span>
 							</button>
 							<div className="w-px bg-neutral-300 h-7"></div>
 							<button
 								onClick={() => toggleEnabled("title")}
-								className="flex items-center gap-2 bg-neutral-100 p-2 rounded-md hover:bg-neutral-200 transition-colors active:scale-95"
+								className={`flex items-center gap-2 bg-neutral-100 p-2 rounded-md transition-colors active:scale-95 ${
+									enabledInputBox.title
+										? "bg-sky-300"
+										: "hover:bg-neutral-200"
+								}`}
 							>
-								<Heading /> <span>Add heading</span>
+								<Heading /> <span>Add Title</span>
 							</button>
 						</div>
 						<button
