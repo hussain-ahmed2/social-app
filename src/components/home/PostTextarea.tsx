@@ -1,40 +1,110 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useRef, useState } from "react";
+import {
+	ChangeEvent,
+	FormEvent,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import Link from "next/link";
 import AuthContext from "@/contexts/AuthContext";
-import { UserCircle, X } from "lucide-react";
+import { Heading, Image, UserCircle, X } from "lucide-react";
 import PostContext from "@/contexts/PostContext";
+
+interface EnabledInputBoxType {
+	title: boolean;
+	imageUrl: boolean;
+}
+const enabledInputBoxInitialState: EnabledInputBoxType = {
+	title: false,
+	imageUrl: false,
+};
+
+interface Errors {
+	title: boolean;
+	imageUrl: boolean;
+	content: boolean;
+}
+
+const errorsInitialState: Errors = {
+	title: false,
+	imageUrl: false,
+	content: false,
+};
+
+export interface PostData {
+	title: string;
+	content: string;
+	imageUrl: string;
+}
+const initialPostDataState: PostData = {
+	title: "",
+	content: "",
+	imageUrl: "",
+};
 
 export default function PostTextarea() {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const { user } = useContext(AuthContext);
-    const { createPost } = useContext(PostContext);
+	const { createPost } = useContext(PostContext);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-	const [post, setPost] = useState<string>("");
-    const [error, setError] = useState<boolean>(false);
+	const [postData, setPostData] = useState<PostData>(initialPostDataState);
+	const [errors, setErrors] = useState<Errors>(errorsInitialState);
+	const [enabledInputBox, setEnabledInputBox] = useState<EnabledInputBoxType>(
+		enabledInputBoxInitialState
+	);
+
+	function toggleEnabled(type: keyof EnabledInputBoxType) {
+		setEnabledInputBox((prev) => ({ ...prev, [type]: !prev[type] }));
+		setPostData((prev) => ({ ...prev, [type]: "" }));
+		setErrors((prev) => ({ ...prev, [type]: false }));
+	}
 
 	function handleCancel() {
 		setIsModalOpen(false);
-        setPost("");
+		setPostData(initialPostDataState);
 	}
 
 	function handlePost(event: FormEvent) {
-        event.stopPropagation();
-        if (!post.trim()) {
-            setError(true);
-            textareaRef.current?.focus();
-            return;
-        }
-        if (user) {
-            createPost(user.id, post);
-            setPost("");
-            setIsModalOpen(false);
-        }
+		event.stopPropagation();
+		if (!postData.content.trim()) {
+			setErrors((prev) => ({ ...prev, content: true }));
+			textareaRef.current?.focus();
+		}
+
+		if (enabledInputBox.title && !postData.title.trim()) {
+			setErrors((prev) => ({ ...prev, title: true }));
+		}
+
+		if (enabledInputBox.imageUrl && !postData.imageUrl.trim()) {
+			setErrors((prev) => ({ ...prev, imageUrl: true }));
+		}
+
+		if (
+			!postData.content.trim() ||
+			(enabledInputBox.title && !postData.title.trim()) ||
+			(enabledInputBox.imageUrl && !postData.imageUrl.trim())
+		) {
+			console.log(errors);
+			return;
+		}
+
+		if (user) {
+			createPost(user.id, postData);
+			setPostData(initialPostDataState);
+			setErrors(errorsInitialState);
+			setEnabledInputBox(enabledInputBoxInitialState);
+			setIsModalOpen(false);
+		}
 	}
 
-    function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
-        setPost(event.target.value);
-		setError(false);
-    }
+	function handleChange(
+		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+	) {
+		const { value, name } = event.target;
+		setPostData((prev) => ({ ...prev, [name]: value }));
+		setErrors((prev) => ({ ...prev, [name]: false }));
+	}
 
 	useEffect(() => {
 		if (isModalOpen) {
@@ -96,15 +166,74 @@ export default function PostTextarea() {
 						<textarea
 							ref={textareaRef}
 							className={`p-3 rounded-lg w-full bg-white border shadow-sm focus:ring-2 ${
-								error ? "ring-rose-500" : "ring-sky-500 "
+								errors.content && "border-rose-500"
 							}`}
 							rows={3}
-							name="post"
+							name="content"
 							id="post"
 							placeholder="What's on your mind?"
-							value={post}
+							value={postData.content}
 							onChange={handleChange}
 						></textarea>
+						<div
+							className={`${
+								enabledInputBox.title ? "block" : "hidden"
+							} flex items-center mt-2`}
+						>
+							<input
+								type="text"
+								name="title"
+								className={`${
+									errors.title && "border-rose-500"
+								} border p-2 rounded-s-md focus:ring-2 ring-sky-500 w-full`}
+								placeholder="Post title"
+								value={postData.title}
+								onChange={handleChange}
+							/>
+							<button
+								onClick={() => toggleEnabled("title")}
+								className="p-2 border rounded-e-md"
+							>
+								<X />
+							</button>
+						</div>
+						<div
+							className={`${
+								enabledInputBox.imageUrl ? "block" : "hidden"
+							} flex items-center mt-2`}
+						>
+							<input
+								type="text"
+								name="imageUrl"
+								className={`${
+									errors.imageUrl && "border-rose-500"
+								} border p-2 rounded-s-md focus:ring-2 ring-sky-500 w-full`}
+								placeholder="Image url"
+								value={postData.imageUrl}
+								onChange={handleChange}
+							/>
+							<button
+								onClick={() => toggleEnabled("imageUrl")}
+								className="p-2 border rounded-e-md"
+							>
+								<X />
+							</button>
+						</div>
+						<div className="flex items-center gap-4 mt-3 mb-1 text-sm text-neutral-800">
+							<button
+								onClick={() => toggleEnabled("imageUrl")}
+								className="flex items-center gap-2 bg-neutral-100 p-2 rounded-md hover:bg-neutral-200 transition-colors active:scale-95"
+							>
+								<Image /> <span>Add image url</span>
+							</button>
+							<div className="w-px bg-neutral-300 h-7"></div>
+							<button
+								onClick={() => toggleEnabled("title")}
+								className="flex items-center gap-2 bg-neutral-100 p-2 rounded-md hover:bg-neutral-200 transition-colors active:scale-95"
+							>
+								<Heading /> <span>Add heading</span>
+							</button>
+						</div>
 						<button
 							onClick={handlePost}
 							className="my-3 py-2 rounded-md bg-sky-500 text-white hover:bg-sky-600 transition-colors"
