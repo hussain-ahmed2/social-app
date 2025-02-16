@@ -20,7 +20,7 @@ export default function page() {
 		);
 
 	return (
-		<div className="max-w-7xl mx-auto container px-5 sm:px-8 md:px-10">
+		<div className="max-w-3xl mx-auto container px-5 sm:px-8 md:px-10">
 			<h1 className="text-center font-bold text-2xl my-5">Profile</h1>
 			<div className="">
 				<div className="flex items-center gap-3">
@@ -38,10 +38,13 @@ export default function page() {
 					)}
 					<h2 className="text-lg font-bold">{user?.name}</h2>
 				</div>
-        <div className="mt-5 border border-gray-300 rounded-md p-5 shadow">
-          <h3 className="font-semibold text-lg">Bio:</h3>
-          <p className="mt-2 font-light text-sm"> {user?.bio ? user.bio : "No bio"} </p>
-        </div>
+				<div className="mt-5 border border-gray-300 rounded-md p-5 shadow">
+					<h3 className="font-semibold text-lg">Bio:</h3>
+					<p className="mt-2 font-light text-sm">
+						{" "}
+						{user?.bio ? user.bio : "No bio"}{" "}
+					</p>
+				</div>
 			</div>
 		</div>
 	);
