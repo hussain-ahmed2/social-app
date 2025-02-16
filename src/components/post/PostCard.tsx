@@ -7,7 +7,8 @@ export default function PostCard({
 	title,
 	authorId,
 	updatedAt,
-	id
+	id,
+	imageUrl
 }: Post) {
 	return (
 		<article className="border p-5 rounded-lg shadow-sm bg-neutral-100 container mx-auto">
@@ -20,9 +21,12 @@ export default function PostCard({
 						{title}
 					</h2>
 					<p className="text-neutral-800 mt-2">{content}</p>
-				<p className="text-neutral-500 text-[0.7rem] mt-2 text-right">
-					{updatedAt}
-				</p>
+					{
+						imageUrl && <img className="w-full mt-2" src={imageUrl} alt={`post-image-${id}`} />
+					}
+					<p className="text-neutral-500 text-[0.7rem] mt-2 text-right">
+						{updatedAt}
+					</p>
 				</div>
 			</div>
 			<div className="mt-2">
