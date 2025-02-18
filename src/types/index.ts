@@ -58,4 +58,6 @@ export interface PostContextType {
 	isPostLikedByAuthor: (postId: number, authorId: number) => Like | undefined;
     deletePost: (postId: number) => void;
     getPostById: (postId: number) => Post | undefined;
+    createComment: (postId: number, authorId: number, content: string) => void;
+    getCommentsByPostId: (postId: number) => Comment[];
 }
