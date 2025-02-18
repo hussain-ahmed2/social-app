@@ -69,6 +69,23 @@ export default function PostProvider({
 		return posts.slice(0, limit).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 	}
 
+	function createComment(postId: number, authorId: number, content: string) {
+		const id = comments.findLast((comment) => comment.id)?.id || 0;
+		const newComment: Comment = {
+			id: id + 1,
+			postId: postId,
+			authorId: authorId,
+			content: content,
+			createdAt: new Date().toUTCString(),
+			updatedAt: new Date().toUTCString(),
+		};
+		setComments((prev) => [...prev, newComment]);
+	}
+
+	function getCommentsByPostId(postId: number): Comment[] {
+		return comments.filter((comment) => comment.postId === postId).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+	}
+
 	return (
 		<PostContext.Provider
 			value={{
@@ -78,7 +95,9 @@ export default function PostProvider({
 				getTotalLikeByPostId,
 				isPostLikedByAuthor,
 				deletePost,
-				getPostById
+				getPostById,
+				createComment,
+				getCommentsByPostId
 			}}
 		>
 			{children}
