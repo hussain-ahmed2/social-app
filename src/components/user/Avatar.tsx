@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 export default function Avatar() {
 	const { user, updateAvatarUrl } = useContext(AuthContext);
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(true);
     const inputRef = useRef<HTMLInputElement | null>(null);
 	const [imageUrl, setImageUrl] = useState<string>(
 		user?.avatarUrl ? user.avatarUrl : ""
@@ -56,9 +56,25 @@ export default function Avatar() {
 			<div
 				className={`${
 					isEditing ? "block" : "hidden"
-				} absolute bg-white border flex flex-col shadow-sm rounded-md overflow-hidden p-4 w-full gap-2 font-normal text-base`}
+				} absolute top-0 right-0 left-0 bg-white border flex flex-col shadow-sm rounded-md overflow-hidden p-4 w-full gap-2 font-normal text-base`}
 			>
-				<label htmlFor="imageUrl">Enter Image Url</label>
+				<div className="border-b">
+					{user?.avatarUrl && !imageError ? (
+						<img
+							onError={(e) => setImageError(true)}
+							className="w-full max-w-40 border aspect-square shadow rounded-full mx-auto mb-4"
+							src={imageUrl}
+							alt={user?.name}
+						/>
+					) : (
+						<div className="mx-auto w-fit shadow">
+							<UserCircle size={160} />
+						</div>
+					)}
+				</div>
+				<label className="mt-2" htmlFor="imageUrl">
+					Enter Image Url
+				</label>
 				<input
 					className="border p-2 rounded"
 					ref={inputRef}
