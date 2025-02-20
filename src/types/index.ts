@@ -51,7 +51,7 @@ export interface AuthContextType {
 }
 
 export interface PostContextType {
-	getPosts: (limit: number) => Post[];
+	getPosts: (limit?: number) => Post[];
 	createPost: (authorId: number, PostData: PostData) => void;
 	toggleLike: (postId: number, authorId: number) => void;
 	getTotalLikeByPostId: (postId: number) => number;
@@ -60,4 +60,5 @@ export interface PostContextType {
     getPostById: (postId: number) => Post | undefined;
     createComment: (postId: number, authorId: number, content: string) => void;
     getCommentsByPostId: (postId: number) => Comment[];
+    updatePostById: (postId: number, postData: PostData) => void;
 }
