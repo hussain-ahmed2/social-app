@@ -37,6 +37,7 @@ export interface PostData {
 	content: string;
 	imageUrl: string;
 }
+
 const initialPostDataState: PostData = {
 	title: "",
 	content: "",
