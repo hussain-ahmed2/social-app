@@ -13,9 +13,10 @@ export default function AuthBar() {
 				<>
 					<div className="flex items-center gap-3">
 						<Link
-							className="font-medium hover:underline text-sky-500"
+							className="hover:underline text-sky-500 flex items-center gap-2 group"
 							href={"/user"}
 						>
+							{user.name}
 							{user?.avatarUrl ? (
 								<img
 									src={user.avatarUrl}
