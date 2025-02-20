@@ -4,11 +4,44 @@ import { redirect } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
 
+const Users: User[] = [
+	{
+		id: 1,
+		name: "John Doe",
+		email: "john@example.com",
+		password: "1234",
+		avatarUrl: "",
+		bio: "",
+		createdAt: new Date().toUTCString(),
+		updatedAt: new Date().toUTCString(),
+	},
+	{
+		id: 2,
+		name: "Jane Doe",
+		email: "jane@example.com",
+		password: "1234",
+		avatarUrl: "",
+		bio: "",
+		createdAt: new Date().toUTCString(),
+		updatedAt: new Date().toUTCString(),
+	},
+	{
+		id: 3,
+		name: "Bob Doe",
+		email: "bob@example.com",
+		password: "1234",
+		avatarUrl: "",
+		bio: "",
+		createdAt: new Date().toUTCString(),
+		updatedAt: new Date().toUTCString(),
+	},
+];
+
 export default function AuthProvider({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
 	const [user, setUser] = useLocalStorage<User | null>("user", null);
-	const [users, setUsers] = useLocalStorage<User[]>("users", []);
+	const [users, setUsers] = useLocalStorage<User[]>("users", Users);
 
 	function handleRegister(userData: Omit<User, "id">) {
 		const existingUser = users.find(
@@ -56,19 +89,21 @@ export default function AuthProvider({
 	}
 
 	function updateBio(updatedBio: string) {
-		setUser(prev => prev ? ({...prev, bio: updatedBio}) : prev);
+		setUser((prev) => (prev ? { ...prev, bio: updatedBio } : prev));
 	}
 
 	function updateAvatarUrl(updatedAvatarUrl: string) {
-		setUser(prev => prev ? ({...prev, avatarUrl: updatedAvatarUrl}) : prev);
+		setUser((prev) =>
+			prev ? { ...prev, avatarUrl: updatedAvatarUrl } : prev
+		);
 	}
 
 	function getUserById(userId: number) {
-		return users.find(u => u.id === userId);
+		return users.find((u) => u.id === userId);
 	}
 
 	useEffect(() => {
-		const updatedUsers = users.map(u => {
+		const updatedUsers = users.map((u) => {
 			if (user?.id === u.id) {
 				return user;
 			}
