@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar/Navbar";
 
 const karla = Karla({
 	variable: "--font-karla",
+	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
