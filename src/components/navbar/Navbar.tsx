@@ -8,6 +8,9 @@ export default function Navbar() {
 				<Link className="font-bold text-2xl" href={"/"}>
 					PostBook
 				</Link>
+				<Link className="hover:underline hover:text-sky-500" href="/posts">
+					Posts
+				</Link>
 				<div className="flex gap-8 items-center">
 					<AuthBar />
 				</div>
