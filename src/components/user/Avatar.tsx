@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 export default function Avatar() {
 	const { user, updateAvatarUrl } = useContext(AuthContext);
-    const [isEditing, setIsEditing] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
 	const [imageUrl, setImageUrl] = useState<string>(
 		user?.avatarUrl ? user.avatarUrl : ""
